@@ -14,11 +14,6 @@ export const useSneakerStore = defineStore('sneaker', {
       getStatus : state => state.status
     },
     actions:{
-      async fetchSneaker(){
-        this.status = "fetching"
-        this.sneakers = await axios({url : "http://54.37.12.181:1337/api/sneakers", method : "get"})
-        this.status = "done"
-      }
     }
   }
 )
