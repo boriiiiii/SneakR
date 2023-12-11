@@ -17,10 +17,12 @@
   }
 
   function addToCollection(){
+    store.addToCollection(selectedProduct.value)
     router.push({name: 'collection'})
   }
 
   function addToWhishlist(){
+    store.addToWhishlist(selectedProduct.value)
     router.push({name: 'whishlist'})
   }
 

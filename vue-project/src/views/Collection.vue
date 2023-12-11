@@ -1,11 +1,50 @@
 <script setup>
+import { useRouter } from "vue-router";
+import { SneakerStore } from "@/stores/sneaker";
+
+const store = SneakerStore();
+const router = useRouter();
+
+function removeFromCollection(id){
+  store.removeFromCollection(id)
+}
+
 
 </script>
 
 <template>
-  <h1>ET CA C LA COLLECTION</h1>
+  <div v-if="!store.collection.length" style="text-align: center">
+    <h1>Empty Collection...</h1>
+    <button @click="router.push({name: 'home'})">Add one from catalog</button>
+  </div>
+
+  <div class="collection-items" v-else>
+    <div class="collection-item" v-for="item in store.collection" :key="item.id">
+      <div class="item-details">
+        <img :src="item.small_image_url">
+        <span>Brand : {{ item.brand }}</span>
+        <span>Name : {{ item.name }}</span>
+        <span>Price : {{ item.estimatedMarketValue }}</span>
+        <span>Colorway : {{ item.colorway}}</span>
+        <button @click="removeFromCollection(item.id)">Remove</button>
+      </div>
+    </div>
+  </div>
+
 </template>
 
 <style scoped>
+.item-details{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  box-shadow: 0 0 17px 6px #e7e7e7;
+  border-radius: 8px;
+  padding: 16px;
+}
 
+.item-details img{
+  width: 20%;
+}
 </style>

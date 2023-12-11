@@ -4,8 +4,9 @@ import axios from 'axios'
 export const SneakerStore = defineStore('sneaker', {
     state: () => {
       return{
-        sneakers : [],
-        status : "default"
+            sneakers : [],
+            whishlist : [],
+            collection : []
       }
      },
     actions:{
@@ -19,6 +20,23 @@ export const SneakerStore = defineStore('sneaker', {
                 .catch((error) => {
                     console.error('Erreur lors de la requête API :', error);
                 });
+        },
+
+        addToWhishlist(sneaker){
+            this.whishlist.push(sneaker)
+        },
+
+        addToCollection(sneaker){
+            this.collection.push(sneaker)
+        },
+
+        removeFromWhishlist(id){
+            this.whishlist = this.whishlist.filter((item) => item.id !== id)
+        },
+
+        removeFromCollection(id){
+            this.collection = this.collection.filter((item) => item.id !== id)
+
         }
     }
   }
