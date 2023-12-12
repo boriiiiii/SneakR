@@ -49,6 +49,12 @@
 
 <style scoped>
 
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,700;1,400&display=swap');
+
+*{
+  font-family: ubuntu;
+}
+
 .products{
   display: flex;
   margin-top: 50px;

@@ -6,6 +6,8 @@ import { useRouter } from "vue-router";
 const store = SneakerStore();
 const router = useRouter();
 const searchQuery = ref('');
+const currentPage = ref(1);
+const pageSize = 24;
 
 onMounted(() => {
   store.fetchProductFromDB();
@@ -29,11 +31,23 @@ const goToProductPage = (id) => {
 }
 
 const filteredSneakers = computed(() => {
-  return store.sneakers.filter(sneaker =>
-      sneaker.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-      sneaker.brand.toLowerCase().includes(searchQuery.value.toLowerCase())
-  );
+  const start = (currentPage.value - 1) * pageSize;
+  const end = start + pageSize;
+  return store.sneakers
+      .filter(sneaker =>
+          sneaker.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+          sneaker.brand.toLowerCase().includes(searchQuery.value.toLowerCase())
+      )
+      .slice(start, end);
 });
+
+function changePage(step) {
+  const newPage = currentPage.value + step;
+  if (newPage > 0 && newPage <= Math.ceil(store.sneakers.length / pageSize)) {
+    currentPage.value = newPage;
+  }
+}
+
 </script>
 
 <template>
@@ -53,23 +67,37 @@ const filteredSneakers = computed(() => {
 
     <div class="sneakers_list">
       <div class="sneaker"
-           v-for="(sneaker, index) in filteredSneakers.slice(0, 25)"
+           v-for="(sneaker, index) in filteredSneakers"
            :key="index"
            @click="goToProductPage(sneaker.id)">
-        <img :src="sneaker.small_image_url">
+        <img v-if="sneaker.small_image_url === 'true'" src="../assets/default_sneaker.png">
+        <img v-else :src="sneaker.small_image_url">
         <h2>{{ sneaker.brand }}</h2>
         <p>{{ adjustProductName(sneaker) }}</p>
         <p>{{ sneaker.retailPrice }}€</p>
+        <button @click="addToWhishlist" ><i class="fa-solid fa-heart"></i></button>
+        <button @click="addToCollection" ><i class="fa-solid fa-check"></i></button>
       </div>
+    </div>
+
+    <div class="pagination">
+      <button @click="changePage(-1)" :disabled="currentPage === 1">Précédent</button>
+      <span>Page {{ currentPage }} </span>
+      <button @click="changePage(1)" :disabled="currentPage * pageSize >= store.sneakers.length">Suivant</button>
     </div>
   </div>
 </template>
+
 
 <style scoped>
   @import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,700;1,400&display=swap');
 
   *{
     font-family: ubuntu;
+  }
+
+  button{
+    cursor: pointer;
   }
 
   .sneakers_list{
@@ -96,6 +124,10 @@ const filteredSneakers = computed(() => {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    //position: fixed;
+    //top: 0;
+    //width: 100%;
+    //background-color : white;
   }
 
   .header img {
@@ -115,5 +147,14 @@ const filteredSneakers = computed(() => {
   input{
     width: 50%;
     font-weight: bold;
+  }
+
+  .pagination {
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .pagination button {
+    margin: 0 10px;
   }
 </style>
