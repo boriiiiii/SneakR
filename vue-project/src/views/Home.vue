@@ -72,8 +72,8 @@ function changePage(step) {
       <img src="@/assets/logo_sneaker.png">
       <input class="filter" v-model="searchQuery" type="text" placeholder="Search...">
       <div class="collection">
-        <button @click="addToWhishlist" ><i class="fa-solid fa-heart"></i></button>
-        <button @click="addToCollection" ><i class="fa-solid fa-check"></i></button>
+        <button @click="router.push({name: 'whishlist'});;" ><i class="fa-solid fa-heart"></i></button>
+        <button @click="router.push({name: 'collection'});" ><i class="fa-solid fa-check"></i></button>
         <button v-if="globalState.isLoggedIn === true"><i class="fa-solid fa-user"></i></button>
         <button v-else @click="router.push({name: 'login'})"><i class="fa-solid fa-right-to-bracket"></i></button>
       </div>
