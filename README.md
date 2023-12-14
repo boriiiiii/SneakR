@@ -32,16 +32,14 @@ Ensure you have Node.js and npm installed on your machine. You can download and 
 
 Open your terminal and clone the repository with the following command:
 
-bashCopy code
-
-`git clone [REPOSITORY_URL]`
+`git clone git@github.com:boriiiiii/SneakR.git`
 
 ### Install Dependencies
 
 Navigate to the cloned project folder and install the necessary dependencies:
 
 ```
-cd SneakR 
+cd vue-project 
 npm install
 ```
 
