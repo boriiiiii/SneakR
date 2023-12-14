@@ -1,8 +1,9 @@
 <script setup>
-import { onMounted, ref, computed } from "vue";
+import { onMounted, ref, computed, inject } from "vue";
 import { SneakerStore } from "@/stores/sneaker";
 import { useRouter } from "vue-router";
 
+const globalState = inject('globalState');
 const store = SneakerStore();
 const router = useRouter();
 const searchQuery = ref('');
@@ -60,6 +61,10 @@ function changePage(step) {
       <div class="collection">
         <button @click="addToWhishlist" ><i class="fa-solid fa-heart"></i></button>
         <button @click="addToCollection" ><i class="fa-solid fa-check"></i></button>
+        <button v-if="globalState.isLoggedIn === true"><i class="fa-solid fa-user"></i></button>
+        <button v-else @click="router.push({name: 'login'})"><i class="fa-solid fa-right-to-bracket"></i></button>
+
+
       </div>
     </div>
 
@@ -74,9 +79,11 @@ function changePage(step) {
         <img v-else :src="sneaker.small_image_url">
         <h2>{{ sneaker.brand }}</h2>
         <p>{{ adjustProductName(sneaker) }}</p>
-        <p>{{ sneaker.retailPrice }}€</p>
-        <button @click="addToWhishlist" ><i class="fa-solid fa-heart"></i></button>
-        <button @click="addToCollection" ><i class="fa-solid fa-check"></i></button>
+        <p>{{ sneaker.estimatedMarketValue }}€</p>
+        <div class="icons-top-right">
+          <button @click="addToWhishlist"><i class="fa-solid fa-heart"></i></button>
+          <button @click="addToCollection"><i class="fa-solid fa-check"></i></button>
+        </div>
       </div>
     </div>
 
@@ -87,7 +94,6 @@ function changePage(step) {
     </div>
   </div>
 </template>
-
 
 <style scoped>
   @import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,700;1,400&display=swap');
@@ -107,6 +113,7 @@ function changePage(step) {
   }
 
   .sneaker{
+    position: relative;
     flex-basis: 28%;
     margin: 8px;
     padding: 16px;
@@ -156,5 +163,12 @@ function changePage(step) {
 
   .pagination button {
     margin: 0 10px;
+  }
+
+  .icons-top-right {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    /* Autres styles si nécessaire */
   }
 </style>

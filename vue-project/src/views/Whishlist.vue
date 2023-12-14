@@ -21,7 +21,8 @@ function removeFromWishlist(id){
   <div class="whishlist-items" v-else>
     <div class="whishlist-item" v-for="item in store.whishlist" :key="item.id">
       <div class="item-details">
-        <img :src="item.small_image_url">
+        <img v-if="item.small_image_url === 'true'" src="../assets/default_sneaker.png">
+        <img v-else :src="item.small_image_url">
         <span>Brand : {{ item.brand }}</span>
         <span>Name : {{ item.name }}</span>
         <span>Price : {{ item.estimatedMarketValue }}</span>
@@ -53,5 +54,10 @@ function removeFromWishlist(id){
 
   .item-details img{
     width: 20%;
+  }
+
+  img {
+    width: 350px;
+    height: 350px;
   }
 </style>

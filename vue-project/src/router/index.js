@@ -3,6 +3,8 @@ import Home from '../views/Home.vue'
 import Product from "@/views/Product.vue";
 import Whishlist from "@/views/Whishlist.vue";
 import Collection from "@/views/Collection.vue";
+import Login from "@/views/Login.vue";
+import Register from "@/views/Register.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -26,6 +28,16 @@ const router = createRouter({
       path: '/collection',
       name: 'collection',
       component: Collection
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: Login
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: Register
     }
   ]
 })

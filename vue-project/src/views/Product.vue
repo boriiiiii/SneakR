@@ -33,12 +33,13 @@
   <button @click="router.push({name: 'home'})">Back</button>
   <div class="products">
       <div class="product-image">
-        <img :src="selectedProduct.small_image_url">
+        <img v-if="selectedProduct.small_image_url === 'true'" src="../assets/default_sneaker.png">
+        <img v-else :src="selectedProduct.small_image_url">
       </div>
       <div class="product-details">
         <h2>{{ selectedProduct.brand }}</h2>
         <p>{{ adjustProductName(selectedProduct) }}</p>
-        <p>{{ selectedProduct.retailPrice }}€</p>
+        <p>{{ selectedProduct.estimatedMarketValue }}€</p>
         <button @click="addToWhishlist" ><i class="fa-solid fa-heart"></i></button>
         <button @click="addToCollection" ><i class="fa-solid fa-check"></i></button>
       </div>
@@ -62,6 +63,11 @@
 
 .product-image{
   margin-right: 24px;
+}
+
+img {
+  width: 350px;
+  height: 350px;
 }
 
 </style>

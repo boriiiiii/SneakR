@@ -21,7 +21,8 @@ function removeFromCollection(id){
   <div class="collection-items" v-else>
     <div class="collection-item" v-for="item in store.collection" :key="item.id">
       <div class="item-details">
-        <img :src="item.small_image_url">
+        <img v-if="item.small_image_url === 'true'" src="../assets/default_sneaker.png">
+        <img v-else :src="item.small_image_url">
         <span>Brand : {{ item.brand }}</span>
         <span>Name : {{ item.name }}</span>
         <span>Price : {{ item.estimatedMarketValue }}</span>
@@ -54,4 +55,10 @@ function removeFromCollection(id){
 .item-details img{
   width: 20%;
 }
+
+img {
+  width: 350px;
+  height: 350px;
+}
+
 </style>
