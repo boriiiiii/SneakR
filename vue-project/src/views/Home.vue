@@ -19,13 +19,26 @@ function adjustProductName(item) {
   return item.name.replace(new RegExp(item.brand, 'i'), '').trim();
 }
 
-function addToCollection(){
-  router.push({name: 'collection'})
+function addToCollection(sneakerId){
+  const sneakerToAdd = store.sneakers.find(s => s.id === sneakerId);
+  if (sneakerToAdd) {
+    console.log("Ajouté à la collection: ", sneakerId);
+    store.addToCollection(sneakerToAdd);
+    console.log(store.collection);
+    router.push({name: 'collection'});
+  }
 }
 
-function addToWhishlist(){
-  router.push({name: 'whishlist'})
+function addToWhishlist(sneakerId){
+  const sneakerToAdd = store.sneakers.find(s => s.id === sneakerId);
+  if (sneakerToAdd) {
+    console.log("Ajouté à la wishlist: ", sneakerId);
+    store.addToWhishlist(sneakerToAdd);
+    console.log(store.whishlist);
+    router.push({name: 'whishlist'});
+  }
 }
+
 
 const goToProductPage = (id) => {
   router.push({ name: 'product', params: { id } });
@@ -63,8 +76,6 @@ function changePage(step) {
         <button @click="addToCollection" ><i class="fa-solid fa-check"></i></button>
         <button v-if="globalState.isLoggedIn === true"><i class="fa-solid fa-user"></i></button>
         <button v-else @click="router.push({name: 'login'})"><i class="fa-solid fa-right-to-bracket"></i></button>
-
-
       </div>
     </div>
 
@@ -81,8 +92,8 @@ function changePage(step) {
         <p>{{ adjustProductName(sneaker) }}</p>
         <p>{{ sneaker.estimatedMarketValue }}€</p>
         <div class="icons-top-right">
-          <button @click="addToWhishlist"><i class="fa-solid fa-heart"></i></button>
-          <button @click="addToCollection"><i class="fa-solid fa-check"></i></button>
+          <button @click.stop="addToWhishlist(sneaker.id)"><i class="fa-solid fa-heart"></i></button>
+          <button @click.stop="addToCollection(sneaker.id)"><i class="fa-solid fa-check"></i></button>
         </div>
       </div>
     </div>

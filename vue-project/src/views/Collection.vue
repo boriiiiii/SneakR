@@ -19,6 +19,7 @@ function removeFromCollection(id){
   </div>
 
   <div class="collection-items" v-else>
+    <button @click="router.push({name: 'home'})">Back</button>
     <div class="collection-item" v-for="item in store.collection" :key="item.id">
       <div class="item-details">
         <img v-if="item.small_image_url === 'true'" src="../assets/default_sneaker.png">

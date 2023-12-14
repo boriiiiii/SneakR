@@ -18,11 +18,13 @@
 
   function addToCollection(){
     store.addToCollection(selectedProduct.value)
+    console.log(store.collection)
     router.push({name: 'collection'})
   }
 
   function addToWhishlist(){
     store.addToWhishlist(selectedProduct.value)
+    console.log(store.whishlist)
     router.push({name: 'whishlist'})
   }
 

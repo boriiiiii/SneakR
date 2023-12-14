@@ -19,6 +19,8 @@ function removeFromWishlist(id){
   </div>
 
   <div class="whishlist-items" v-else>
+    <button @click="router.push({name: 'home'})">Back</button>
+
     <div class="whishlist-item" v-for="item in store.whishlist" :key="item.id">
       <div class="item-details">
         <img v-if="item.small_image_url === 'true'" src="../assets/default_sneaker.png">
